@@ -1,0 +1,22 @@
+body {
+    background-image: url("images/backImg.jpg");
+    background-size: 100%;
+    color: rgb(243, 247, 240);
+   }
+h1{
+    font-style: italic;
+font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;}
+   
+  .hand{
+    width: 900px;height: 180px;
+    border: 4px dotted green;
+    padding: 50px;
+    margin: 20px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    box-sizing: border-box;
+  }
+  label{
+      
+      font-family: Georgia, 'Times New Roman', Times, serif;
+      font-style: italic;
+  }
