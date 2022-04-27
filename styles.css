@@ -1,5 +1,5 @@
 body {
-    background-image: url("images/backImg.jpg");
+    background-image: url("images/snakeC.jpg");
     background-size: 100%;
     color: rgb(243, 247, 240);
    }
@@ -7,16 +7,59 @@ h1{
     font-style: italic;
 font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;}
    
-  .hand{
-    width: 900px;height: 180px;
-    border: 4px dotted green;
-    padding: 50px;
-    margin: 20px;
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    box-sizing: border-box;
-  }
+ 
   label{
       
       font-family: Georgia, 'Times New Roman', Times, serif;
       font-style: italic;
+  }
+  #stage{
+      position: absolute;
+      top: 20%;
+      left: 30%;
+      margin-top: -50px;
+      margin-left: -50px;
+      width: 400px;
+      height: 400px;
+      /* background-color: aqua;*/
+      background-color: rgba(191, 194, 11, 0.8);
+      border :solid;
+  /* }
+    border-top-style: solid;
+    width: 100px;
+    height: 100px;
+     */
+
+  }
+
+
+  .button-div {
+    position: relative;
+  }
+  
+  .button {
+    font-size: larger;
+    font-family:Georgia, 'Times New Roman', Times, serif;
+    position: relative;
+    top:80%;    
+    left:35%;
+  }
+  .snakeNode{
+    background-color:  rgb(15, 36, 54);
+/* border-radius: 50%;*/
+    height: 15px;
+    position: absolute;
+    width: 15px;
+
+  }
+
+  #heading {
+    font-size: 45px;
+    font-family:Georgia, 'Times New Roman', Times, serif;
+    font-style: italic;
+    position: fixed;
+    right: 10px; bottom: 60px;
+    width: 350px;
+    height:10px;
+    padding: 5px;
   }
