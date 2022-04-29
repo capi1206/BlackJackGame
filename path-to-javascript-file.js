@@ -1,17 +1,34 @@
 
   
 function startG(){ console.log('empezo!')
-
-let snakeH=new SnakeNode(4, null, 'R',width/2,width/2);
+let snakeH=new SnakeNode(7, null, 'R',width/2,width/2);
 let $apple=$('<div class="apple"></div>');
- coord=getRandomAppleCoord(4);
+coord=getRandomAppleCoord(7);
 $apple.css({ left: coord[0], top: coord[1] });
 $stage.append($apple);
 let nodes=$('#stage').children('div');
-     let again=false;console.log(parseInt(nodes[3].style.left));
-     snakeH.direction='U';
- setTimeout(function(){ move(snakeH, 500);
-     setTimeout(function(){move(snakeH,1000);},500);},500)
+     
+     //snakeH.direction='U';
+
+ setInterval(move,150,snakeH,70);
+
+ //document.addEventListener('keyup', (event) => {snakeH.direction='U';}, false);
+ //document.addEventListener('keyleft', (event) => {snakeH.direction='L';}, false);
+ window.addEventListener("keydown", function(event) {
+     if (event.defaultPrevented) {return;}
+     if (event.code === "ArrowDown"){
+         snakeH.direction='D';
+     } else if (event.code === "ArrowUp"){
+         snakeH.direction='U';
+     } else if (event.code === "ArrowLeft"){
+         snakeH.direction='L';
+     } else if (event.code === "ArrowRight"){
+         snakeH.direction='R';
+     }
+    
+   }, true);
+
+   
      
      //move(snakeH,1500);
      //snakeH.direction='U';
@@ -37,7 +54,7 @@ function move(node, time){
           setTimeout(function(){node.$node.css({ left: node.left+7.5});}, time/2);
           setTimeout(function(){node.$node.css({ left: node.left});}, time);
           if(node.childNode){ 
-               if(node.childNode.left-node.left===30)node.childNode.direction='L';
+               if(node.childNode.left-node.left === 30)node.childNode.direction='L';
                if(node.childNode.top-node.top===15)node.childNode.direction='U';
                if(node.childNode.top-node.top===-15)node.childNode.direction='D';
                move(node.childNode, time);}}
