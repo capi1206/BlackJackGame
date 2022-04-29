@@ -52,6 +52,14 @@ font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;}
     width: 15px;
 
   }
+  .apple{
+    background-color:  rgb(212, 63, 63);
+ border-radius: 50%;
+    height: 15px;
+    position: absolute;
+    width: 15px;
+
+  }
 
   #heading {
     font-size: 45px;
