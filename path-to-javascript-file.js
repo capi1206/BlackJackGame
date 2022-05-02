@@ -11,14 +11,31 @@ let time=70;
 let notOut=true;
 //force way out of the setInterval function once hitWall or bumps into body
 
+actualMotion(time);
+// let movInt= setInterval(  () => {
+//      if(hitWall()){restart();snakeH=null;$apple=null;clearInterval(movInt);notOut=false}
+//      if(ateApple()){$('#stage').find('.apple').each(function(){this.remove()});
+//           console.log("come");time*=0.99;snakeH.incByOne();clearInterval(movInt);
+//           }
+//           move(snakeH,time);},2*time);
 
-let movInt= setInterval(  () => {
-     if(hitWall()){restart();snakeH=null;$apple=null;clearInterval(movInt);notOut=false}
-     if(ateApple()){$('#stage').find('.apple').each(function(){this.remove()});
-          console.log("come");time*=0.99;snakeH.incByOne();clearInterval(movInt);
-          }
-          move(snakeH,time);},2*time);
 
+
+}
+function actualMotion(time){
+
+     let movInt= setInterval(  () => {
+          if(hitWall() || hitOwn()){restart();snakeH=null;$apple=null;clearInterval(movInt);}
+          if(ateApple()){$('#stage').find('.apple').each(function(){this.remove()});
+               $apple=null;
+               console.log("come");time*=0.9;
+               snakeH.incByOne();
+               snakeH.lenght++;
+               $apple=new Apple(snakeH.lenght);
+               clearInterval(movInt);
+               actualMotion(time);
+               }
+               move(snakeH,time);},2*time);
 
 
 }
@@ -41,7 +58,7 @@ window.addEventListener("keydown", function(event) {
    }, true);
 
 
-
+//checks if the snake's head is too close to the wall and going in that direction
 function hitWall() {
      if((snakeH.left<2 && snakeH.direction === "L")||(snakeH.left>400 && snakeH.direction === "R")||
       (snakeH.top>400 && snakeH.direction === "D")||(snakeH.top<2 && snakeH.direction === 'U')){
@@ -49,8 +66,20 @@ function hitWall() {
       }
     return false;
 }
+
+function hitOwn() {
+     let actualNode=snakeH.childNode;
+     while(actualNode.childNode){
+          if((snakeH.left===actualNode.left &&snakeH.top==actualNode.top)){return true;}
+          actualNode = actualNode.childNode;
+     }return false;
+}
+    
+
+//impl
+
 function ateApple(){
-    if($apple){if(snakeH.left-$apple.left<2 && snakeH.top-$apple.top<2&&$apple.top-snakeH.top<2&&
+    if($apple!==null){if(snakeH.left-$apple.left<2 && snakeH.top-$apple.top<2&&$apple.top-snakeH.top<2&&
      snakeH.direction === "L")return true;
     if($apple.left-snakeH.left<2 && snakeH.top-$apple.top<2&&$apple.top-snakeH.top<2&&
           snakeH.direction === "R")return true;
@@ -58,7 +87,7 @@ function ateApple(){
                snakeH.direction === "U")return true;
      if($apple.top-snakeH.top<2 && snakeH.left-$apple.left<2&&$apple.left-snakeH.left<2&&
                     snakeH.direction === "D")return true;                     
-    }
+    }return false;
 //     ||($apple.left-snakeH.left<2 && snakeH.direction === "R")||
 //       (snakeH.top-$apple.top<2 && snakeH.direction === "U")||($apple.top-snakeH.top<2 && snakeH.direction === 'D'))
 }
@@ -109,6 +138,7 @@ function move(node, time){if(node== null){return}
           function restart(){snakeH=undefined;
                $apple=null;
                $('#stage').find('.snakeNode').each(function(){this.remove()});
+               $('#stage').find('.snakeH').each(function(){this.remove()});
                $('#stage').find('.apple').each(function(){this.remove()});
                document.getElementById("startG").style.display = "block";
                
@@ -129,6 +159,8 @@ function getRandomAppleCoord(snakeL){
 }
 
 
+
+
 //places a node into the stage
 function setPosition(Node,left,top){
      Node.$node.css({ left: left, top: top });
@@ -145,13 +177,16 @@ class SnakeNode{
           else this.childNode=new SnakeNode(len -1,this,dir, left-15, top );
           this.top=top;
           this.left=left;
-          this.$node=$('<div class="snakeNode"></div>');
+          this.$node=$('<div ></div>');
+          //assigns the class snakeHead if the len is actual to the initial snake's lenght
+          if(len===7)this.$node.addClass("snakeH");
+          else this.$node.addClass("snakeNode");
           setPosition(this, left,top);
           return this;
       }
       //need to fix to detail of what happens when the node is next to the border
      incByOne(){
-          if (this.childNode)this.childNode.incByOne();
+          if (this.childNode!==null)this.childNode.incByOne();
           else {if(this.direction=='R')this.childNode=new SnakeNode(1,this,'R', this.left-15, this.top );
                 if(this.direction=='L')this.childNode=new SnakeNode(1,this,'L', this.left+15, this.top );
                 if(this.direction=='D')this.childNode=new SnakeNode(1,this,'L', this.left, this.top -15);
